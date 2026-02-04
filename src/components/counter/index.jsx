@@ -6,7 +6,7 @@ const Counter = () => {
     const [counttwo, setCounttwo] = useState(0);
 
     useEffect(() =>{
-        console.log("in Use Effect");
+        console.log("in Use Effect 2");
         console.log(count);
         document.title = `Count: ${count}`;
     }, [count])
