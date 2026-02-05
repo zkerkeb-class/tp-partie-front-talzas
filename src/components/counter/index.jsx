@@ -1,36 +1,61 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Title from "../title";
+import PokeCard from "../pokeCard";
 
 const Counter = () => {
-    const [count, setCount] = useState(0);
-    const [counttwo, setCounttwo] = useState(0);
+  const [pokemons, setPokemons] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [count, setCount] = useState(0);
 
-    useEffect(() =>{
-        console.log("in Use Effect 2");
-        console.log(count);
-        document.title = `Count: ${count}`;
-    }, [count])
+  useEffect(() => {
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=20")
+      .then((r) => r.json())
+      .then((data) => {
+        setPokemons(data.results);
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.error(e);
+        setLoading(false);
+      });
+  }, []);
 
+  useEffect(() => {
+    document.title = `Pokemon index: ${count}`;
+  }, [count]);
 
+  const increment = () => {
+    setCount((prev) => Math.min(prev + 1, pokemons.length - 1));
+  };
 
-    const decrement = () => {
-        setCount(count - 1);
-    }
+  const decrement = () => {
+    setCount((prev) => Math.max(prev - 1, 0));
+  };
 
-    return (
-        <div>
-            { count >= 10 &&
-            <Title label="BRAVO 10 compteur"></Title>
-            }
-            <h2>
-                Counter
-            </h2>
-            <p>{count}</p>
-            <p>{counttwo}</p>
-            <button onClick={() => setCounttwo(counttwo + 1)}>Incrémenter</button>
-            <button onClick={decrement}>Décrémenter</button>
-        </div>
-    )
-}
+  if (loading) return <p>Chargement...</p>;
+  if (!pokemons.length) return <p>Aucun Pokémon</p>;
+
+  return (
+    <div>
+      {count >= 10 && <Title label="BRAVO 10 compteur" />}
+
+      <h2>Pokemon Viewer</h2>
+
+      <p>
+        {count + 1} / {pokemons.length}
+      </p>
+
+      <button onClick={increment} disabled={count === pokemons.length - 1}>
+        Incrémenter
+      </button>
+
+      <button onClick={decrement} disabled={count === 0}>
+        Décrémenter
+      </button>
+
+      <PokeCard pokemon={pokemons[count]} />
+    </div>
+  );
+};
 
 export default Counter;

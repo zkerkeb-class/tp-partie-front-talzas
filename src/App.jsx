@@ -1,21 +1,8 @@
-import './App.css'
+import "./App.css";
+import PokeList from "./components/pokelist";
 
-import Title from './components/title'
-import Counter from './components/counter'
-import PokeList from './components/pokelist'
 function App() {
-
-  return (
-    <div>
-      {/* <Title  label="Titre 1" />
-      <Title label="Titre 2" />
-      <Title label="Titre 3" />
-      <Title label="Titre 4" />
-      <Title/> */}
-      <Counter/>
-      <PokeList/>
-    </div>
-  )
+  return <PokeList />;
 }
 
-export default App
+export default App;
