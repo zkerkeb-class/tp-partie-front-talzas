@@ -329,8 +329,8 @@ export default function PokemonDetail() {
                     boxShadow: "0 24px 80px rgba(0,0,0,0.6)",
                   }}
                 >
-                  <h3 style={{ marginTop: 0 }}>Supprimer {poke.name?.english} ?</h3>
-                  <p>Cette action est irréversible.</p>
+                  <h3 style={{ marginTop: 0, color: "#000" }}>Supprimer {poke.name?.english} ?</h3>
+                  <p style={{ color: "#000" }}>Cette action est irréversible.</p>
 
                   <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
                     <button onClick={() => setConfirm(false)}>Annuler</button>
