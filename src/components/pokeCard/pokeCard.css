@@ -1,0 +1,326 @@
+/* Carte = style TCG */
+.tcgCard {
+  width: 380px;
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+
+  /* fond type (sans image) */
+  background:
+    radial-gradient(120% 90% at 20% 0%, rgba(255,255,255,0.35), transparent 55%),
+    radial-gradient(120% 90% at 90% 10%, rgba(255,255,255,0.18), transparent 55%),
+    linear-gradient(135deg, var(--typeBg1), var(--typeBg2));
+
+  border: 4px solid rgba(0,0,0,0.32);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.48);
+
+  transform-style: preserve-3d;
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+/* hover = relief plus fort */
+.tcgCard.isHover {
+  box-shadow: 0 26px 60px rgba(0,0,0,0.55);
+}
+
+/* cadre doré intérieur (comme une carte) */
+.tcgCard::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 14px;
+  border: 2px solid rgba(255, 215, 120, 0.9);
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+
+/* ===== Shiny permanent (holo layer) ===== */
+.tcgCard.shiny::after {
+  content: "";
+  position: absolute;
+  inset: -60%;
+  background:
+    radial-gradient(circle at var(--mx) var(--my),
+      rgba(255,255,255,0.50),
+      rgba(120,255,255,0.18) 25%,
+      rgba(255,120,255,0.16) 45%,
+      rgba(255,255,120,0.14) 60%,
+      transparent 75%),
+    linear-gradient(115deg,
+      transparent 25%,
+      rgba(255,255,255,0.32) 40%,
+      rgba(160,255,255,0.18) 50%,
+      rgba(255,160,255,0.18) 60%,
+      transparent 75%);
+  mix-blend-mode: overlay;
+  opacity: 0.45;                 /* BRILLE TOUT LE TEMPS */
+  pointer-events: none;
+  transform: translateX(-20%) rotate(10deg);
+  animation: holoSweep 2.6s ease-in-out infinite;
+}
+
+/* hover : encore plus shiny */
+.tcgCard.shiny.isHover::after {
+  opacity: 0.85;
+  filter: saturate(1.2) contrast(1.05);
+  animation-duration: 1.6s;
+}
+
+@keyframes holoSweep {
+  0%   { transform: translateX(-35%) rotate(10deg); }
+  50%  { transform: translateX(18%)  rotate(10deg); }
+  100% { transform: translateX(-35%) rotate(10deg); }
+}
+
+/* ===== Bords “vivants” (glow animé) ===== */
+.tcgCard .edgeGlow {
+  display: none;
+}
+.tcgCard.shiny {
+  /* halo externe */
+  outline: 0px solid transparent;
+}
+.tcgCard.shiny.isHover {
+  outline: 0px solid transparent;
+}
+
+/* glow border via pseudo-element */
+.tcgCard.shiny .glowBorder {
+  display: none;
+}
+.tcgCard.shiny .glowBorder { display: none; }
+
+/* on utilise un pseudo-element dédié au contour animé */
+.tcgCard.shiny .borderFX { display: none; }
+
+.tcgCard.shiny::marker { content: ""; }
+
+/* contour animé */
+.tcgCard.shiny ._ { display:none; }
+
+.tcgCard.shiny::before {
+  /* déjà utilisé pour cadre doré */
+}
+
+/* nouveau contour animé */
+.tcgCard.shiny .borderAnim { display: none; }
+
+/* solution propre: un 2e pseudo via box-shadow + background-clip */
+.tcgCard.shiny {
+  /* gradient sur bord externe via drop-shadow */
+}
+.tcgCard.shiny.isHover {
+  /* sur hover, on “pulse” un glow */
+  animation: glowPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0% { box-shadow: 0 26px 60px rgba(0,0,0,0.55), 0 0 0 rgba(255,255,255,0.0); }
+  50% { box-shadow: 0 26px 60px rgba(0,0,0,0.55), 0 0 22px rgba(255,255,255,0.28); }
+  100% { box-shadow: 0 26px 60px rgba(0,0,0,0.55), 0 0 0 rgba(255,255,255,0.0); }
+}
+
+/* ===== Top bar ===== */
+.tcgTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 14px 16px 10px;
+  color: rgba(0,0,0,0.85);
+}
+
+.tcgTopLeft {
+  display: grid;
+  gap: 6px;
+}
+
+.stagePill {
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 950;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  background: rgba(255,255,255,0.62);
+  border: 2px solid rgba(0,0,0,0.12);
+}
+
+.tcgName {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 950;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
+}
+
+.tcgTopRight {
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+}
+
+.hp {
+  padding: 1px 10px;
+  border-radius: 12px;
+  font-weight: 950;
+  background: rgba(255,255,255,0.62);
+  border: 2px solid rgba(0,0,0,0.12);
+}
+
+.typeIcon {
+  margin-top: 3px;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 950;
+  background: rgba(255,255,255,0.62);
+  border: 2px solid rgba(0,0,0,0.12);
+}
+
+/* ===== Illustration frame ===== */
+.artFrame {
+  padding: 0 16px;
+  transform: translateZ(18px);
+}
+
+.artInner {
+  height: 190px;
+  border-radius: 12px;
+  border: 3px solid rgba(0,0,0,0.28);
+  background:
+    radial-gradient(80% 80% at 30% 20%, rgba(255,255,255,0.40), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.25), rgba(0,0,0,0.04));
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.sprite {
+  width: 150px;
+  height: 150px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 12px 20px rgba(0,0,0,0.35));
+  transform: translateY(6px);
+}
+
+/* ===== Info line ===== */
+.infoLine {
+  margin: 10px 16px 0;
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(0,0,0,0.75);
+  background: rgba(255,255,255,0.55);
+  border: 2px solid rgba(0,0,0,0.12);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+/* ===== Moves ===== */
+.moves {
+  padding: 12px 16px 0;
+  display: grid;
+  gap: 10px;
+}
+
+.move {
+  display: grid;
+  grid-template-columns: 70px 1fr 46px;
+  gap: 10px;
+  align-items: start;
+
+  padding: 12px;
+  border-radius: 14px;
+  border: 2px solid rgba(0,0,0,0.20);
+  background: rgba(255,255,255,0.30);
+  color: rgba(0,0,0,0.82);
+  transform: translateZ(12px);
+}
+
+.energyRow {
+  display: flex;
+  gap: 8px;
+  padding-top: 6px;
+}
+
+.energyDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.14);
+  border: 2px solid rgba(0,0,0,0.20);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.35);
+}
+
+.moveTitle {
+  font-weight: 950;
+  font-size: 15px;
+}
+
+.moveText {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  opacity: 0.9;
+}
+
+.dmg {
+  font-weight: 950;
+  font-size: 18px;
+  text-align: right;
+  padding-top: 4px;
+}
+
+/* ===== Bottom ===== */
+.tcgBottom {
+  padding: 12px 16px 16px;
+  display: grid;
+  gap: 10px;
+  transform: translateZ(10px);
+}
+
+.bottomRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badgeSmall {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.45);
+  border: 2px solid rgba(0,0,0,0.16);
+  color: rgba(0,0,0,0.75);
+  font-weight: 950;
+  font-size: 12px;
+}
+
+.flavor {
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(0,0,0,0.75);
+  background: rgba(255,255,255,0.35);
+  border: 2px solid rgba(0,0,0,0.12);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.statsRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.18);
+  color: rgba(255,255,255,0.92);
+  font-weight: 950;
+  font-size: 12px;
+}

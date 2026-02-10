@@ -1,0 +1,202 @@
+/* ===== Layout global ===== */
+.viewer {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+}
+
+.viewerHeader {
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+}
+
+/* ===== GROS TITRE SHINY ===== */
+.mainTitle {
+  margin: 0;
+  font-size: clamp(44px, 6vw, 76px);
+  font-weight: 1000;
+  letter-spacing: 1px;
+  text-align: center;
+
+  background:
+    linear-gradient(
+      110deg,
+      #ffffff 10%,
+      #a5f3fc 25%,
+      #f0abfc 40%,
+      #fde68a 55%,
+      #ffffff 70%
+    );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  text-shadow:
+    0 6px 30px rgba(255,255,255,0.25),
+    0 18px 60px rgba(0,0,0,0.6);
+
+  animation: titleShine 6s linear infinite;
+}
+
+.mainTitle span {
+  opacity: 0.85;
+}
+
+@keyframes titleShine {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* ===== Navigation ===== */
+.nav {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+
+  padding: 12px 16px;
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.14),
+      rgba(255,255,255,0.04)
+    );
+  border: 1px solid rgba(255,255,255,0.22);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    0 18px 50px rgba(0,0,0,0.55);
+
+  backdrop-filter: blur(10px);
+}
+
+/* ===== Boutons flèches premium ===== */
+.arrowBtn {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(255,255,255,0.25);
+  background:
+    radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,0.35), rgba(255,255,255,0.05)),
+    rgba(255,255,255,0.08);
+
+  color: white;
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    0 14px 40px rgba(0,0,0,0.45);
+
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    background 140ms ease;
+}
+
+.arrowBtn:hover {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    0 18px 50px rgba(0,0,0,0.55),
+    0 0 22px rgba(255,255,255,0.35);
+}
+
+.arrowBtn:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow:
+    inset 0 2px 4px rgba(0,0,0,0.35),
+    0 10px 28px rgba(0,0,0,0.45);
+}
+
+/* ===== Compteur ===== */
+.counter {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 0 8px;
+  color: rgba(255,255,255,0.9);
+}
+
+.counterBig {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.counterSlash {
+  opacity: 0.55;
+  font-weight: 900;
+}
+
+.counterSmall {
+  font-size: 14px;
+  opacity: 0.75;
+  font-weight: 800;
+}
+
+/* ===== Texte ===== */
+.hint {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.loading {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+
+/* ===== TITRE STYLE POKÉMON ===== */
+.pokemonTitle {
+  margin: 0;
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 1000;
+  letter-spacing: 1.5px;
+  text-align: center;
+
+  /* Jaune Pokémon */
+  color: #ffcb05;
+
+  /* Contour BLEU épais façon logo */
+  text-shadow:
+    -4px -4px 0 #2a75bb,
+     4px -4px 0 #2a75bb,
+    -4px  4px 0 #2a75bb,
+     4px  4px 0 #2a75bb,
+    -4px  0   0 #2a75bb,
+     4px  0   0 #2a75bb,
+     0   -4px 0 #2a75bb,
+     0    4px 0 #2a75bb,
+
+    /* ombre profondeur */
+     0 10px 30px rgba(0,0,0,0.6);
+
+  transform: translateZ(0);
+}
+
+.pokemonTitle span {
+  color: #ffcb05;
+}
+
+/* petit rebond subtil (optionnel mais très Pokémon) */
+.pokemonTitle {
+  animation: pokeBounce 2.8s ease-in-out infinite;
+}
+
+@keyframes pokeBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
